@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-table-list',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.http.get<any[]>('http://localhost:8080/api/v1/clients').subscribe({
+    next: data => {
+      this.tableData = data;
+    },
+    error: error => {
+      console.error(error);
+    }
+  });
   }
 
   isHovered: boolean = false
@@ -30,28 +39,13 @@ export class TableListComponent implements OnInit {
   //Static for now, needs to be collected from database eventually
   tableData = [
     {
-      id: 6,
-      firstName: 'Mason',
-      lastName: 'Porter',
-      location: 'London',
-      birthYear: 1967
-    },
-    {
-      id: 2,
-      firstName: 'Lars',
-      lastName: 'Larsen',
-      location: 'Gloucester',
-      birthYear: 1932
-    },
-    {
-      id: 6,
-      firstName: 'Evan',
-      lastName: 'Cornelius',
-      location: 'Madrid',
-      birthYear: 1954
-    },
-    // Add more objects for other rows in the table
-    ];
+      cpr: '',
+      firstName: '',
+      lastName: '',
+      address: '',
+      birthYear: ''
+    }
+  ];
   
     deleteRow(rowIndex: number): void {
       this.tableData.splice(rowIndex, 1);
