@@ -20,7 +20,7 @@ RUN npm run build --prod
 FROM nginx:1.19.0-alpine
 
 # copy build artifacts to the nginx public folder
-COPY --from=build /app/dist/angular-app /usr/share/nginx/html
+COPY --from=build /app/dist/angular-bootstrap /usr/share/nginx/html
 
 # copy nginx config file
 COPY nginx.conf /etc/nginx/conf.d/default.conf
