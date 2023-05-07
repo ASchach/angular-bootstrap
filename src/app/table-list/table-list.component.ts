@@ -36,7 +36,6 @@ export class TableListComponent implements OnInit {
     console.log(rowData);
   }
 
-  //Static for now, needs to be collected from database eventually
   tableData = [
     {
       id: '',
@@ -55,8 +54,4 @@ export class TableListComponent implements OnInit {
         this.tableData.splice(rowIndex, 1);
       });
   }
-  
-
-  
-
 }
