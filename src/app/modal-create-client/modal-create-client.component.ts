@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal-create-client',
@@ -16,19 +17,28 @@ export class ModalCreateClientComponent {
     address: ''
   };
 
+  
+
   constructor(private http: HttpClient) { }
   ngOnInit(): void {}
 
   onSubmit() {
-  
-    this.http.post('http://localhost:8080/api/v1/clients', this.formData).subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.error(error);
-      }
-    );
-  }
+   var newFormData = {
+      cpr: parseInt(this.formData.cpr),
+      firstName: this.formData.firstName,
+      lastName: this.formData.lastName,
+      birthYear: parseInt(this.formData.birthYear),
+      address: this.formData.address
+    }
+    console.log(newFormData)
+    this.http.post('http://client:8080/api/v1/clients', newFormData).subscribe({
+    next: response => {
+      console.log(response);
+    },
+    error: error => {
+      console.error(error);
+    }
+  });
+}
 
 }
