@@ -39,6 +39,7 @@ export class TableListComponent implements OnInit {
   //Static for now, needs to be collected from database eventually
   tableData = [
     {
+      id: '',
       cpr: '',
       firstName: '',
       lastName: '',
@@ -47,9 +48,14 @@ export class TableListComponent implements OnInit {
     }
   ];
   
-    deleteRow(rowIndex: number): void {
-      this.tableData.splice(rowIndex, 1);
-    }
+  deleteRow(rowIndex: number): void {
+    const toDelete = this.tableData[rowIndex];
+    this.http.delete(`http://localhost:8080/api/v1/clients/${toDelete.id}`)
+      .subscribe(() => {
+        this.tableData.splice(rowIndex, 1);
+      });
+  }
+  
 
   
 
