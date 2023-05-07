@@ -9,6 +9,8 @@ import { tap } from 'rxjs/operators';
 })
 export class ModalCreateClientComponent {
 
+  errorMessage = ''
+
   formData = {
     cpr: '',
     firstName: '',
@@ -31,12 +33,17 @@ export class ModalCreateClientComponent {
       address: this.formData.address
     }
     console.log(newFormData)
-    this.http.post('http://client:8080/api/v1/clients', newFormData).subscribe({
+    this.http.post('http://localhost:8080/api/v1/clients', newFormData).subscribe({
     next: response => {
       console.log(response);
+       // close the modal box if the form data is successfully submitted       
+        document.getElementById("closeButton")?.click();
+    
     },
     error: error => {
       console.error(error);
+      this.errorMessage = error.message;
+      
     }
   });
 }
