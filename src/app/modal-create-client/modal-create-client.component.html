@@ -1,0 +1,54 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    New client
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Add new client</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+         <!-- Modal body--form -->
+        <div class="modal-body">
+            <form>
+                <div class="d-flex flex-fill">
+                    <!-- First name -->
+                    <div class="mb-3 me-3">
+                        <label for="labelFirstName" class="form-label">First name</label>
+                        <input name="firstName" class="form-control"  [(ngModel)]="formData.firstName">
+                    </div>
+                    <!-- Last name -->
+                    <div class="mb-3 ms-3">
+                        <label for="labelLastName" class="form-label">Last name</label>
+                        <input type="lastName" class="form-control" id="inputLastName" name="lastName" [(ngModel)]="formData.lastName">
+                    </div>
+                </div>
+                <!-- Address -->
+                <div class="mb-3">
+                    <label for="labelAddress" class="form-label">Address</label>
+                    <input type="address" class="form-control" id="inputAddress" name="address" [(ngModel)]="formData.address">
+                </div>
+                <!-- Year of birth -->
+                <div class="mb-3">
+                    <label for="labelBirthYear" class="form-label">Year of Birth</label>
+                    <input type="birthYear" class="form-control" id="inputBirthYear" name="birthYear" [(ngModel)]="formData.birthYear">
+                  </div>
+                <!-- CPR -->
+                <div class="mb-3">
+                    <label for="labelCpr" class="form-label">CPR</label>
+                    <input type="cpr" class="form-control" id="inputCpr" name="cpr" [(ngModel)]="formData.cpr">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit()"> Submit </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
