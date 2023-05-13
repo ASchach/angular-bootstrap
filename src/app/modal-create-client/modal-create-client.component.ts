@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-modal-create-client',
@@ -8,6 +7,8 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./modal-create-client.component.scss']
 })
 export class ModalCreateClientComponent {
+  @Input()
+  apiUrl!: string;
 
   errorMessage = ''
 
@@ -33,7 +34,7 @@ export class ModalCreateClientComponent {
       address: this.formData.address
     }
     console.log(newFormData)
-    this.http.post('http://localhost:8080/api/v1/clients', newFormData).subscribe({
+    this.http.post(this.apiUrl, newFormData).subscribe({
     next: response => {
       console.log(response);
        // close the modal box if the form data is successfully submitted       

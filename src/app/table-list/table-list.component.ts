@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -7,28 +7,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./table-list.component.scss']
 })
 export class TableListComponent implements OnInit {
+  @Input()
+  apiUrl!: string;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get<any[]>('http://localhost:8080/api/v1/clients').subscribe({
-    next: data => {
-      this.tableData = data;
-    },
-    error: error => {
-      console.error(error);
-    }
-  });
-  }
-
-  isHovered: boolean = false
-
-  onMouseEnter() {
-    this.isHovered = true;
-  }
-
-  onMouseOut() {
-   this.isHovered = false;
+    this.http.get<any[]>(this.apiUrl).subscribe({
+      next: data => {
+        this.tableData = data;
+      },
+      error: error => {
+        console.error(error);
+      }
+    });
   }
 
   editRow(rowData: any) {
@@ -49,7 +41,7 @@ export class TableListComponent implements OnInit {
   
   deleteRow(rowIndex: number): void {
     const toDelete = this.tableData[rowIndex];
-    this.http.delete(`http://localhost:8080/api/v1/clients/${toDelete.id}`)
+    this.http.delete(`${this.apiUrl}/${toDelete.id}`)
       .subscribe(() => {
         this.tableData.splice(rowIndex, 1);
       });
