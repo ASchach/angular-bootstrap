@@ -1,32 +1,14 @@
-# base image
-FROM node:14-alpine AS build
+FROM node:alpine3.17
 
-# set working directory
-WORKDIR /app
+WORKDIR usr/src/app
 
-# copy project file
-COPY package*.json ./
+COPY package.json .
+COPY package-lock.json .
 
-# install dependencies
 RUN npm install
 
-# copy project files
 COPY . .
 
-# build app
-RUN npm run build --prod
+EXPOSE 4200
 
-# use a lighter image for deployment
-FROM nginx:1.19.0-alpine
-
-# copy build artifacts to the nginx public folder
-COPY --from=build /app/dist/angular-bootstrap /usr/share/nginx/html
-
-# copy nginx config file
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# expose port
-EXPOSE 80
-
-# start nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD /usr/src/app/node_modules/.bin/ng serve --host 0.0.0.0
