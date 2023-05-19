@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { MainViewComponent } from './main-view/main-view.component';
 import { SensumViewComponent } from './sensum-view/sensum-view.component';
 import { BostedViewComponent } from './bosted-view/bosted-view.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -36,9 +37,11 @@ const routes: Routes = [
     NgbModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    ReactiveFormsModule
   ],
-  exports:[RouterModule],
+  exports:[RouterModule, 
+    ReactiveFormsModule],  
   providers: [],
   bootstrap: [AppComponent]
 })

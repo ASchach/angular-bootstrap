@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormsModule, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-create-client',
@@ -12,28 +13,39 @@ export class ModalCreateClientComponent {
 
   errorMessage = ''
 
-  formData = {
+  /* formData = {
     cpr: '',
     firstName: '',
     lastName: '',
     birthYear: '',
     address: ''
-  };
+  }; */
+
+  formData: FormGroup;
 
   
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private fb: FormBuilder) {
+    this.formData = fb.group({
+      firstName: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      address: ['', [Validators.required]],
+      birthYear: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
+      cpr: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]]
+    });
+   }
   ngOnInit(): void {}
 
   onSubmit() {
    var newFormData = {
-      cpr: parseInt(this.formData.cpr),
-      firstName: this.formData.firstName,
-      lastName: this.formData.lastName,
-      birthYear: parseInt(this.formData.birthYear),
-      address: this.formData.address
+      cpr: parseInt(this.formData.get('cpr')?.value),
+      firstName: this.formData.get('firstName')?.value,
+      lastName: this.formData.get('lastName')?.value,
+      birthYear: parseInt(this.formData.get('birthYear')?.value),
+      address: this.formData.get('address')?.value
     }
     console.log(newFormData)
+    console.log(typeof(newFormData))
     this.http.post(this.apiUrl, newFormData).subscribe({
     next: response => {
       console.log(response);

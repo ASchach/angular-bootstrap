@@ -32,23 +32,39 @@
                                     </th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let row of tableData; let i = index ">
+                                    <tr *ngFor="let row of tableData; let i = index">
+                                        <ng-container *ngIf="editData === tableData[i]; else displayrow">
+                                            <!-- Editable row -->
+                                            <td><input type="text" [(ngModel)]="editData.cpr"></td>
+                                            <td><input type="text" [(ngModel)]="editData.firstName"></td>
+                                            <td><input type="text" [(ngModel)]="editData.lastName"></td>
+                                            <td><input type="text" [(ngModel)]="editData.address"></td>
+                                        <td><input type="text" [(ngModel)]="editData.birthYear"></td>
+                                        <td>
+                                            <div class="btn-group-vertical">
+                                                <button class="btn btn-success" (click)="saveEditedRow(i)">Save</button>
+                                                <button class="btn btn-secondary" (click)="cancelEditRow()">Cancel</button>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-template #displayrow>
                                       <td>{{ row.cpr }}</td>
                                       <td>{{ row.firstName }}</td>
                                       <td>{{ row.lastName }}</td>
                                       <td>{{ row.address }}</td>
                                       <td>{{ row.birthYear }}</td>
                                       <div class="dropdown">
-                                        <button type="button" class="btn btn-white btn-lg" data-bs-toggle="dropdown">
-                                            ...
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><button class="dropdown-item" type="button" (click)="editRow(row)">Edit</button></li>
-                                            <li><button class="dropdown-item" type="button" (click)="deleteRow(i)">Delete</button></li>                                  
-                                        </ul>
+                                          <button type="button" class="btn btn-white btn" data-bs-toggle="dropdown">
+                                              ...
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><button class="dropdown-item fs-6" type="button" (click)="editRow(i)">Edit</button></li>
+                                                <li><button class="dropdown-item fs-6" type="button" (click)="deleteRow(i)">Delete</button></li>                                  
+                                            </ul>
                                         </div>
-                                      
-                                    </tr>
+                                        
+                                    </ng-template>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -58,4 +74,10 @@
         </div>
     </div>
   </div>
+
+  <style>
+    .table-responsive {
+        min-height: 50vh;
+    }
+</style>
   
