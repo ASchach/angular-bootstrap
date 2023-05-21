@@ -29,7 +29,6 @@ export class TableListComponent implements OnInit {
 
   tableData = [
     {
-      id: '',
       cpr: '',
       firstName: '',
       lastName: '',
@@ -48,7 +47,7 @@ export class TableListComponent implements OnInit {
 
   deleteRow(rowIndex: number): void {
     const toDelete = this.tableData[rowIndex];
-    this.http.delete(`${this.apiUrl}/${toDelete.id}`)
+    this.http.delete(`${this.apiUrl}/${toDelete.cpr}`)
       .subscribe(() => {
         this.tableData.splice(rowIndex, 1);
       });
@@ -57,31 +56,18 @@ export class TableListComponent implements OnInit {
   editData: any = {};
 
   editRow(i: any){
-    console.log(this.editData)
-    console.log(this.tableData[i])
-    this.editData = this.tableData[i]
-    
-    console.log(this.editData);
-    console.log(this.tableData[i])
-    console.log(this.editData === this.tableData[i])
+      this.editData = this.tableData[i]
   }
   
 
   saveEditedRow(rowIndex: number): void {
-    // Update the tableData with the edited row data
-    /* const rowIndex = this.tableData.indexOf(this.editData);
-    this.tableData[rowIndex] = { ...this.editData };
-    var toEdit = this.tableData[rowIndex];
-    console.log(toEdit.id)
-    console.log(toEdit) */
-    console.log(this.editData)
-    
-    this.http.put(`${this.apiUrl}/${this.editData.id}`, this.editData).subscribe({
+    // Update the tableData with the edited row data    
+    this.http.put(`${this.apiUrl}/${this.editData.cpr}`, this.editData).subscribe({
       next: response => {
-        console.log(response);
-        this.editData = {};
-         // close the modal box if the form data is successfully submitted
-      
+        if(response !== null){
+          console.log(response)
+        }
+        this.editData = {}      
       },
       error: error => {
         console.error(error);

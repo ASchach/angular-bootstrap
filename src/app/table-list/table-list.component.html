@@ -35,7 +35,7 @@
                                     <tr *ngFor="let row of tableData; let i = index">
                                         <ng-container *ngIf="editData === tableData[i]; else displayrow">
                                             <!-- Editable row -->
-                                            <td><input type="text" [(ngModel)]="editData.cpr"></td>
+                                            <td>{{ row.cpr }}</td>
                                             <td><input type="text" [(ngModel)]="editData.firstName"></td>
                                             <td><input type="text" [(ngModel)]="editData.lastName"></td>
                                             <td><input type="text" [(ngModel)]="editData.address"></td>

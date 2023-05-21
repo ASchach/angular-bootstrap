@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormsModule, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-create-client',
@@ -12,14 +12,6 @@ export class ModalCreateClientComponent {
   apiUrl!: string;
 
   errorMessage = ''
-
-  /* formData = {
-    cpr: '',
-    firstName: '',
-    lastName: '',
-    birthYear: '',
-    address: ''
-  }; */
 
   formData: FormGroup;
 
@@ -44,11 +36,9 @@ export class ModalCreateClientComponent {
       birthYear: parseInt(this.formData.get('birthYear')?.value),
       address: this.formData.get('address')?.value
     }
-    console.log(newFormData)
-    console.log(typeof(newFormData))
     this.http.post(this.apiUrl, newFormData).subscribe({
     next: response => {
-      console.log(response);
+      if(response!== null){console.log(response);}
        // close the modal box if the form data is successfully submitted       
         document.getElementById("closeButton")?.click();
     
